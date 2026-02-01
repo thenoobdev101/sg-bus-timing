@@ -1,0 +1,1 @@
+LTA_API_KEY = "uG66vPEgQVe2WRcBMak0dg=="

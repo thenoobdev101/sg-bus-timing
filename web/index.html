@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SG Bus Timing App</title>
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/web/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>SG Bus Timing</h1>
+
+    <div class="top-bar">
+      <div class="search-bar">
+        <input type="text" id="stop" placeholder="Enter Bus Stop Code">
+        <button onclick="loadBus()">Check</button>
+      </div>
+
+      <button id="darkModeToggle">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Recent Stops -->
+    <div class="recent-stops" id="recentStops"></div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <label><input type="checkbox" id="filterSD" checked> SD</label>
+      <label><input type="checkbox" id="filterDD" checked> DD</label>
+      <label><input type="checkbox" id="filterBD" checked> BD</label>
+    </div>
+
+    <!-- Favorites -->
+    <div class="favorites-section" id="favorites"></div>
+
+    <div class="main">
+      <div id="map"></div>
+
+      <div class="sidebar">
+        <div id="results" class="bus-cards"></div>
+
+        <div id="legend">
+          <h3>Legend</h3>
+          <p><img src="/web/icons/sd_bus.png" width="20"> SD</p>
+          <p><img src="/web/icons/dd_bus.png" width="20"> DD</p>
+          <p><img src="/web/icons/bd_bus.png" width="20"> BD</p>
+          <p><span class="legend-color" style="background-color:#2ecc71"></span> Seats Available</p>
+          <p><span class="legend-color" style="background-color:#f39c12"></span> Standing Available</p>
+          <p><span class="legend-color" style="background-color:#e74c3c"></span> Limited Standing</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Custom JS -->
+  <script src="/web/script.js"></script>
+</body>
+</html>

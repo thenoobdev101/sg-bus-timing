@@ -1,0 +1,233 @@
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  margin: 0;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #ddd;
+}
+
+h1 {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* Top bar: search + dark mode */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.search-bar input, .search-bar button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-bar button {
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.search-bar button:hover {
+  background-color: #2980b9;
+}
+
+#darkModeToggle {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #444;
+  color: #fff;
+  margin-top: 5px;
+}
+
+#darkModeToggle:hover {
+  background-color: #666;
+}
+
+/* Recent stops */
+.recent-stops {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.recent-stop-btn {
+  padding: 6px 12px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+body.dark-mode .recent-stop-btn {
+  background-color: #333;
+  color: #ddd;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.filters label {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Favorites */
+.favorites-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+
+.favorite-btn {
+  padding: 6px 12px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.favorite-star {
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 8px;
+  color: #ccc;
+  transition: color 0.2s;
+}
+
+.favorite-star.active {
+  color: gold;
+}
+
+/* Main layout */
+.main {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+#map {
+  flex: 2;
+  min-height: 300px;
+  max-height: 80vh;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: border 0.3s;
+}
+
+body.dark-mode #map {
+  border: 1px solid #555;
+}
+
+/* Sidebar */
+.sidebar {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Bus cards */
+.bus-card {
+  background-color: white;
+  padding: 12px 16px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+body.dark-mode .bus-card {
+  background-color: #2b2b2b;
+  box-shadow: 0 2px 5px rgba(255,255,255,0.05);
+  color: #ddd;
+}
+
+.bus-card:hover {
+  transform: scale(1.02);
+}
+
+.bus-card h2 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+/* Bus lines inside card */
+.bus-line {
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: 4px 0;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Load colors */
+.SEA { background-color: #eafaf1; border-left: 6px solid #2ecc71; color: #2ecc71; }
+.SDA { background-color: #fff6e5; border-left: 6px solid #f39c12; color: #f39c12; }
+.LSD { background-color: #fdecea; border-left: 6px solid #e74c3c; color: #e74c3c; }
+
+/* Dark mode adjustments */
+body.dark-mode .SEA { background-color: #144d2a; color: #2ecc71; }
+body.dark-mode .SDA { background-color: #44310e; color: #f39c12; }
+body.dark-mode .LSD { background-color: #4d1a1a; color: #e74c3c; }
+
+/* Pulse animation for imminent buses */
+@keyframes pulse { 0%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:0.7}100%{transform:scale(1);opacity:1} }
+.arriving { animation: pulse 1s infinite; }
+.imminent { box-shadow: 0 0 12px 3px #f1c40f; border-radius: 50%; }
+
+/* Loading spinner */
+.loading-spinner { text-align: center; font-size: 18px; color: #3498db; padding: 20px; font-weight: bold; }
+
+/* Legend */
+#legend {
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 10px;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+body.dark-mode #legend { background-color: #2b2b2b; color: #ddd; }
+
+.legend-color { display: inline-block; width: 15px; height: 15px; margin-right: 5px; vertical-align: middle; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .main { flex-direction: column; }
+  #map { min-height: 250px; max-height: 50vh; }
+}
