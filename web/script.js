@@ -75,9 +75,49 @@ function renderBus(bus,index){let mins=getMinutes(bus?.EstimatedArrival);const a
 // =====================
 // LOAD BUS DATA
 // =====================
-async function loadBus(){const stop=document.getElementById("stop").value;if(!stop)return;showLoading(true);addRecentStop(stop);try{const res=await fetch(`https://sg-bus-timing-bhdk.onrender.com/api/arrivals?stop=${stop}`),data=await res.json();const container=document.getElementById("results");container.innerHTML="";clearMarkers();const starClass=favoriteStops.includes(stop)?"favorite-star active":"favorite-star";container.innerHTML+=`<h2>Bus Stop: ${stop} <span class="${starClass}" onclick="toggleFavorite('${stop}')">★</span></h2>`;if(!data.Services)return;const filters={SD:document.getElementById("filterSD").checked,DD:document.getElementById("filterDD").checked,BD:document.getElementById("filterBD").checked};let filteredServices=data.Services.filter(s=>filters[s.NextBus?.Type]||filters[s.NextBus2?.Type]||filters[s.NextBus3?.Type]);filteredServices.sort((a,b)=>{const aTime=a.NextBus?.EstimatedArrival?new Date(a.NextBus.EstimatedArrival):new Date(8640000000000000),bTime=b.NextBus?.EstimatedArrival?new Date(b.NextBus.EstimatedArrival):new Date(8640000000000000);return aTime-bTime;});filteredServices.forEach(service=>{const card=document.createElement("div");card.className="bus-card";card.innerHTML=`<h2>Service ${service.ServiceNo}</h2>${renderBus(service.NextBus,1)}${renderBus(service.NextBus2,2)}${renderBus(service.NextBus3,3)}`;container.appendChild(card);addOrUpdateMarker(service.NextBus,service.ServiceNo,"1st Bus");addOrUpdateMarker(service.NextBus2,service.ServiceNo,"2nd Bus");addOrUpdateMarker(service.NextBus3,service.ServiceNo,"3rd Bus");});}catch(err){console.error(err);}finally{showLoading(false);}
+async function loadBus() {
+  const stop = document.getElementById("stop").value;
+  if (!stop) return;
 
-// =====================
+  showLoading(true);
+
+  try {
+    const res = await fetch(`/api/arrivals?stop=${stop}`);
+    if (!res.ok) throw new Error("API failed");
+
+    const data = await res.json();
+
+    const container = document.getElementById("results");
+    container.innerHTML = "";
+
+    if (!data.Services || data.Services.length === 0) {
+      container.innerHTML = "No services found";
+      return;
+    }
+
+    data.Services.forEach(service => {
+      const card = document.createElement("div");
+      card.className = "bus-card";
+
+      card.innerHTML = `
+        <h2>Service ${service.ServiceNo}</h2>
+        ${renderBusSafe(service.NextBus, 1)}
+        ${renderBusSafe(service.NextBus2, 2)}
+        ${renderBusSafe(service.NextBus3, 3)}
+      `;
+
+      container.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("results").innerHTML =
+      "Failed to load bus timings";
+  } finally {
+    showLoading(false);   // ← THIS FIXES THE INFINITE LOADING
+  }
+}
+
 // RECENT STOPS RENDER
 // =====================
 renderFavorites();
@@ -91,4 +131,4 @@ setInterval(()=>{if(document.getElementById("stop").value)loadBus();},20000);
 // =====================
 // LOADING SPINNER
 // =====================
-function showLoading(show){const container=document.getElementById("results");if(show)container.innerHTML='<div class="loading-spinner">Loading...</div>';}}
+function showLoading(show){const container=document.getElementById("results");if(show)container.innerHTML='<div class="loading-spinner">Loading...</div>';}
