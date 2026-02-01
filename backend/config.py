@@ -1,1 +1,2 @@
-LTA_API_KEY = "uG66vPEgQVe2WRcBMak0dg=="
+import os
+LTA_API_KEY = os.environ.get("LTA_API_KEY")
